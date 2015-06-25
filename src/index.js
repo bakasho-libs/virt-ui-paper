@@ -16,7 +16,13 @@ function Paper(props, children, context) {
 virt.Component.extend(Paper, "virt-ui-Paper");
 
 Paper.contextTypes = {
-    muiTheme: propTypes.object.isRequired
+    muiTheme: propTypes.implement({
+        styles: propTypes.implement({
+            paper: propTypes.implement({
+                backgroundColor: propTypes.string.isRequired
+            }).isRequired
+        }).isRequired
+    }).isRequired
 };
 
 Paper.propTypes = {
