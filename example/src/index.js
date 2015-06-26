@@ -63,4 +63,3 @@ AppPrototype.render = function() {
 };
 
 virtDOM.render(virt.createView(App), document.getElementById("app"));
-

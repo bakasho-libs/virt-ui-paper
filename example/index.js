@@ -106,7 +106,6 @@ AppPrototype.render = function() {
 virtDOM.render(virt.createView(App), document.getElementById("app"));
 
 
-
 },
 function(require, exports, module, global) {
 
@@ -1837,6 +1836,7 @@ var has = require(11),
     map = require(12),
     indexOf = require(42),
     isString = require(10),
+    isArray = require(6),
     isFunction = require(5),
     extend = require(43),
     mixin = require(44),
@@ -2189,6 +2189,20 @@ NodePrototype.renderView = function() {
     return renderedView;
 };
 
+function warnError(error) {
+    var i, il;
+
+    if (isArray(error)) {
+        i = -1;
+        il = error.length - 1;
+        while (i++ < il) {
+            warnError(error[i]);
+        }
+    } else {
+        console.warn(error);
+    }
+}
+
 NodePrototype.__checkTypes = function(propTypes, props) {
     var localHas = has,
         displayName = this.__getName(),
@@ -2198,8 +2212,8 @@ NodePrototype.__checkTypes = function(propTypes, props) {
         for (propName in propTypes) {
             if (localHas(propTypes, propName)) {
                 error = propTypes[propName](props, propName, displayName);
-                if (error !== null) {
-                    console.warn(error);
+                if (error) {
+                    warnError(error);
                 }
             }
         }
@@ -7211,7 +7225,6 @@ Paper.contextTypes = {
 };
 
 Paper.propTypes = {
-    style: propTypes.object,
     circle: propTypes.bool,
     rounded: propTypes.bool,
     transitionEnabled: propTypes.bool,
@@ -7240,6 +7253,7 @@ var Z_DEPTH_SHADOWS = [
 
 PaperPrototype.getStyles = function() {
     var props = this.props,
+        zDepth = props.zDepth,
         styles = {
             root: {
                 backgroundColor: this.context.muiTheme.styles.paper.backgroundColor,
@@ -7251,8 +7265,8 @@ PaperPrototype.getStyles = function() {
     if (props.transitionEnabled) {
         css.transition(styles.root, "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms");
     }
-    if (props.zDepth !== 0) {
-        css.boxShadow(styles.root, Z_DEPTH_SHADOWS[props.zDepth]);
+    if (zDepth > 0 && zDepth < 6) {
+        css.boxShadow(styles.root, Z_DEPTH_SHADOWS[zDepth]);
     }
 
     css.boxSizing(styles.root, "border-box");
@@ -7363,8 +7377,8 @@ propTypes.implement = function createImplementCheck(expectedInterface) {
             propInterface = props[propName],
             propKey, propValidate, result;
 
-        for (propKey in propInterface) {
-            if (has(propInterface, propKey)) {
+        for (propKey in expectedInterface) {
+            if (has(expectedInterface, propKey)) {
                 propValidate = expectedInterface[propKey];
                 result = propValidate(propInterface, propKey, callerName + "." + propKey);
 

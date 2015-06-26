@@ -26,7 +26,6 @@ Paper.contextTypes = {
 };
 
 Paper.propTypes = {
-    style: propTypes.object,
     circle: propTypes.bool,
     rounded: propTypes.bool,
     transitionEnabled: propTypes.bool,
@@ -55,6 +54,7 @@ var Z_DEPTH_SHADOWS = [
 
 PaperPrototype.getStyles = function() {
     var props = this.props,
+        zDepth = props.zDepth,
         styles = {
             root: {
                 backgroundColor: this.context.muiTheme.styles.paper.backgroundColor,
@@ -66,8 +66,8 @@ PaperPrototype.getStyles = function() {
     if (props.transitionEnabled) {
         css.transition(styles.root, "all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms");
     }
-    if (props.zDepth !== 0) {
-        css.boxShadow(styles.root, Z_DEPTH_SHADOWS[props.zDepth]);
+    if (zDepth > 0 && zDepth < 6) {
+        css.boxShadow(styles.root, Z_DEPTH_SHADOWS[zDepth]);
     }
 
     css.boxSizing(styles.root, "border-box");
