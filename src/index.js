@@ -32,13 +32,11 @@ Paper.propTypes = {
     zDepth: propTypes.oneOf([0, 1, 2, 3, 4, 5])
 };
 
-Paper.getDefaultProps = function() {
-    return {
-        style: {},
-        rounded: true,
-        zDepth: 1,
-        transitionEnabled: true
-    };
+Paper.defaultProps = {
+    style: {},
+    rounded: true,
+    zDepth: 1,
+    transitionEnabled: true
 };
 
 PaperPrototype = Paper.prototype;
