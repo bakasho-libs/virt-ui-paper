@@ -15,10 +15,12 @@ AppPrototype = App.prototype;
 AppPrototype.getChildContext = function() {
     return {
         muiTheme: {
-            styles: {
-                paper: {
-                    backgroundColor: "#fff"
-                }
+            fontFamily: "Roboto",
+            palette: {
+                level0Color: "#E0E0E0",
+                level1Color: "#F5F5F5",
+                level2Color: "#FAFAFA",
+                level3Color: "#FFFFFF"
             }
         }
     };

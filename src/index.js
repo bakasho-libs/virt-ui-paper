@@ -17,15 +17,15 @@ virt.Component.extend(Paper, "virt-ui-Paper");
 
 Paper.contextTypes = {
     muiTheme: propTypes.implement({
-        styles: propTypes.implement({
-            paper: propTypes.implement({
-                backgroundColor: propTypes.string.isRequired
-            }).isRequired
+        fontFamily: propTypes.string,
+        palette: propTypes.implement({
+            level3Color: propTypes.string
         }).isRequired
     }).isRequired
 };
 
 Paper.propTypes = {
+    color: propTypes.string,
     circle: propTypes.bool,
     rounded: propTypes.bool,
     transitionEnabled: propTypes.bool,
@@ -33,7 +33,6 @@ Paper.propTypes = {
 };
 
 Paper.defaultProps = {
-    style: {},
     rounded: true,
     zDepth: 1,
     transitionEnabled: true
@@ -55,7 +54,7 @@ PaperPrototype.getStyles = function() {
         zDepth = props.zDepth,
         styles = {
             root: {
-                backgroundColor: this.context.muiTheme.styles.paper.backgroundColor,
+                backgroundColor: props.color || this.context.muiTheme.palette.level3Color,
                 fontFamily: this.context.muiTheme.fontFamily,
                 WebkitTapHighlightColor: "rgba(0,0,0,0)"
             }
