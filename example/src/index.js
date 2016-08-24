@@ -14,7 +14,7 @@ AppPrototype = App.prototype;
 
 AppPrototype.getChildContext = function() {
     return {
-        muiTheme: {
+        theme: {
             fontFamily: "Roboto",
             palette: {
                 level0Color: "#E0E0E0",

@@ -16,7 +16,7 @@ function Paper(props, children, context) {
 virt.Component.extend(Paper, "virt-ui-Paper");
 
 Paper.contextTypes = {
-    muiTheme: propTypes.implement({
+    theme: propTypes.implement({
         fontFamily: propTypes.string,
         palette: propTypes.implement({
             level3Color: propTypes.string
@@ -54,8 +54,8 @@ PaperPrototype.getStyles = function() {
         zDepth = props.zDepth,
         styles = {
             root: {
-                backgroundColor: props.color || this.context.muiTheme.palette.level3Color,
-                fontFamily: this.context.muiTheme.fontFamily,
+                backgroundColor: props.color || this.context.theme.palette.level3Color,
+                fontFamily: this.context.theme.fontFamily,
                 WebkitTapHighlightColor: "rgba(0,0,0,0)"
             }
         };
